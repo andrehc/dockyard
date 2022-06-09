@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Yard;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\ItemNotFoundException;
 
@@ -15,7 +16,7 @@ class YardController extends Controller
      */
     public function index()
     {
-        return Yard::all();
+        return Yard::paginate();
     }
 
     /**
@@ -45,7 +46,11 @@ class YardController extends Controller
      */
     public function show($id)
     {
-        return Yard::find($id);
+        try {
+            return Yard::findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            abort(404, 'Yard not found');
+        }
     }
 
     /**
@@ -58,9 +63,8 @@ class YardController extends Controller
     public function update(Request $request, $id)
     {
         $yard = Yard::find($id);
-        
-        if(!$yard)
-        {
+
+        if (!$yard) {
             abort(404, 'Yard not found');
         }
 
@@ -82,13 +86,11 @@ class YardController extends Controller
     public function destroy($id)
     {
         $yard = Yard::find($id);
-        
-        if(!$yard)
-        {
+
+        if (!$yard) {
             abort(404, 'Yard not found');
         }
-        
+
         $yard->delete();
-        
     }
 }
