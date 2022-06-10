@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Yard extends Model
+class Container extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'locator',
+        'depth',
         'width',
-        'length'
+        'length',
+        'yard_id'
     ];
 
-    public function containers()
-    {
-        return $this->hasMany(Container::class);
-    }
-
-    public function getAreaAttribute()
-    {
-        return $this->width * $this-> length;
+    public function yard(){
+        return $this->belongsTo(Yard::class);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\PatioController;
 use App\Http\Controllers\YardController;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ Route::get('yards/view/{id}', function($id){
     ->whereRaw('id =' . $id)->first();
 });
 Route::apiResource('yards', YardController::class);
+Route::apiResource('containers', ContainerController::class);
 
 
 

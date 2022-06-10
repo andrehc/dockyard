@@ -30,6 +30,15 @@ class YardControllerTest extends TestCase
             ->assertJsonCount($items, 'data');
     }
 
+    public function test_empty_yard_list_returns_ok()
+    {
+        Yard::whereNotNull('locator')->delete();
+        $response = $this->getJson('api/yards');
+        $response
+            ->assertStatus(200)
+            ->assertJsonCount(0, 'data');
+    }
+
     public function test_specific_yard_is_displayed()
     {
         $yard = Yard::factory()->create();

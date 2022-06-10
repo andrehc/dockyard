@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Yard;
+use App\Models\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\ItemNotFoundException;
+use Mockery\Matcher\Contains;
 
-class YardController extends Controller
+class ContainerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class YardController extends Controller
      */
     public function index()
     {
-        return Yard::paginate();
+        return Container::paginate();
     }
 
     /**
@@ -27,41 +27,41 @@ class YardController extends Controller
      */
     public function store(Request $request)
     {
-        return Yard::create($request->all());
+        return Container::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Container  $container
      * @return \Illuminate\Http\Response
      */
-    public function show(Yard $yard)
+    public function show(Container $container)
     {
-        return $yard;
+       return $container;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Container  $container
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Yard $yard)
+    public function update(Request $request, Container $container)
     {
-        $yard->update($request->all());
-        return $yard;
+        $container->update($request->all());
+        return $container;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Container  $container
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Yard $yard)
-    {        
-        $yard->delete();
+    public function destroy(Container $container)
+    {
+       $container->delete();
     }
 }
