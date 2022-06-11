@@ -4,8 +4,6 @@ namespace Tests\Feature\Http;
 
 use App\Models\Yard;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\CreatesApplication;
 use Tests\TestCase;
 
 class YardControllerTest extends TestCase
@@ -59,13 +57,12 @@ class YardControllerTest extends TestCase
 
 
     public function test_yard_can_be_updated()
-    {
-        
+    {        
         $yard = Yard::factory()->create();
         $new_attributes = [
             'locator' => $yard->locator,
-            'width' => $yard->width/2,
-            'length' => $yard->length/2
+            'width' => $yard->width+100,
+            'length' => $yard->length+100
         ];
         $response = $this->putJson("api/yards/{$yard->id}", $new_attributes);
         $response
@@ -73,6 +70,21 @@ class YardControllerTest extends TestCase
             ->assertJsonFragment(['width'=>$new_attributes['width']]);
     }
 
+    public function test_yard_cant_have_area_decreased()
+    {
+        $yard = Yard::factory()->create();        
+                
+        $new_attributes = [
+            'locator' => $yard->locator,
+            'width' => $yard->width-($yard->width*0.2),
+            'length' => $yard->length
+        ];
+
+        $response = $this->putJson("api/yards/{$yard->id}", $new_attributes);
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment(['message'=>'You can not decrease the yard area']);
+    }
 
     public function test_yard_can_be_deleted()
     {
