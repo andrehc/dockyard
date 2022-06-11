@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\YardCreateRequest;
+use App\Http\Requests\YardUpdateRequest;
 use App\Models\Yard;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -25,7 +27,7 @@ class YardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(YardCreateRequest $request)
     {
         return Yard::create($request->all());
     }
@@ -48,7 +50,7 @@ class YardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Yard $yard)
+    public function update(YardUpdateRequest $request, Yard $yard)
     {
         $yard->update($request->all());
         return $yard;
