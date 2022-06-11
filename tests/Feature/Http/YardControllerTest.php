@@ -76,7 +76,7 @@ class YardControllerTest extends TestCase
                 
         $new_attributes = [
             'locator' => $yard->locator,
-            'width' => $yard->width-($yard->width*0.2),
+            'width' => $yard->width - (int)($yard->width*0.2),
             'length' => $yard->length
         ];
 
