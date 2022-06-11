@@ -34,4 +34,11 @@ class Yard extends Model
     {
         return (int)ceil($this->containers->count() / $this->maximum_stack);
     }
+
+    public function getContainerCapacityAttribute()
+    {
+        $horizontal_container_capacity = (int) floor($this->width / config('constants.container.width'));
+        $vertical_container_capacity = (int) floor($this->length / config('constants.container.length'));
+        return $horizontal_container_capacity * $vertical_container_capacity * $this->maximum_stack ;
+    }
 }
