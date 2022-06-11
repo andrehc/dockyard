@@ -34,9 +34,11 @@ class YardUpdateRequest extends FormRequest
     }
 
     public function withValidator($validator)
-    {
+    {        
         $validator->after(function ($validator) {
-            if ($this->yard->area > $this->width * $this->length) {
+            $newArea = ($this->width * $this->length) / 10000;
+            
+            if ($this->yard->area > $newArea) {
                 $validator->errors()->add('area', 'You can not decrease the yard area');
             }
         });

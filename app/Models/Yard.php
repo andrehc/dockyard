@@ -27,7 +27,7 @@ class Yard extends Model
 
     public function getAreaAttribute()
     {
-        return $this->width * $this-> length;
+        return ($this->width * $this-> length) / 10000;
     }
 
     public function getStacksAttribute()

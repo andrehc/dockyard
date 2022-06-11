@@ -16,7 +16,7 @@ class YardTest extends TestCase
     {
         $yard = Yard::factory()->create();
 
-        $areaExpected = $yard->width * $yard->length;
+        $areaExpected = ($yard->width * $yard->length) / 10000;
 
         $this->assertSame($areaExpected, $yard->area);
     }
