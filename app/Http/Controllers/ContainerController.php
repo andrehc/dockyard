@@ -41,19 +41,7 @@ class ContainerController extends Controller
        return $container;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Container  $container
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Container $container)
-    {
-        $container->update($request->all());
-        return $container;
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *

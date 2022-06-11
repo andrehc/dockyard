@@ -28,7 +28,7 @@ Route::get('yards/view/{id}', function($id){
     ->whereRaw('id =' . $id)->first();
 });
 Route::apiResource('yards', YardController::class);
-Route::apiResource('containers', ContainerController::class);
+Route::apiResource('containers', ContainerController::class)->except(['update']);
 
 
 
