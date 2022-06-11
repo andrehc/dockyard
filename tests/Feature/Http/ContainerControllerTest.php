@@ -59,7 +59,7 @@ class ContainerControllerTest extends TestCase
     }
 
 
-    public function test_container_can_be_updated()
+    public function test_container_can_not_be_updated()
     {
         $yard = Yard::factory()->create();
         $container = Container::factory()->for($yard)->create();
@@ -72,8 +72,7 @@ class ContainerControllerTest extends TestCase
         $response = $this->putJson("api/containers/{$container->id}", $new_attributes);
         
         $response
-            ->assertStatus(200)
-            ->assertJsonFragment(['width'=>$new_attributes['width']]);
+            ->assertStatus(405);
     }
 
 
