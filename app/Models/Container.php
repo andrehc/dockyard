@@ -14,7 +14,9 @@ class Container extends Model
         'depth',
         'width',
         'length',
-        'yard_id'
+        'yard_id',
+        'tare_weight',
+        'max_load_weight'
     ];
 
     public function yard(){
