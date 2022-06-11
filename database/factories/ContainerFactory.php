@@ -20,7 +20,7 @@ class ContainerFactory extends Factory
             'locator' => strtoupper($this->faker->bothify('?##')),
             'length' => config('constants.container.length'),
             'width' => config('constants.container.width'),
-            'depth' => config('constants.container.depth'),
+            'height' => config('constants.container.height'),
             'max_load_weight' => config('constants.container.max_load_weight'),
             'tare_weight' => config('constants.container.tare_weight')
         ];

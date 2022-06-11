@@ -11,7 +11,7 @@ class Container extends Model
 
     protected $fillable = [
         'locator',
-        'depth',
+        'height',
         'width',
         'length',
         'yard_id',
