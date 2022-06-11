@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('yards', function (Blueprint $table) {
             $table->id();
-            $table->string('locator')->max(3)->unique();
+            $table->string('locator', 3)->unique();
             $table->integer('length');
             $table->integer('width');
             $table->timestamps();

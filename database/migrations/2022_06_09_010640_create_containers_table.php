@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('containers', function (Blueprint $table) {
             $table->id();
-            $table->string('locator')->max(3)->unique();
+            $table->string('locator', 3)->unique();
             $table->integer('depth');
             $table->integer('length');
             $table->integer('width');
+            $table->integer('tare_weight');
+            $table->integer('max_load_weight');
             $table->foreignId('yard_id')->constrained();
             $table->timestamps();
         });
