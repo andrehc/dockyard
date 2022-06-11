@@ -20,8 +20,18 @@ class Yard extends Model
         return $this->hasMany(Container::class);
     }
 
+    public function getMaximumStackAttribute()
+    {
+        return config('constants.yard.maximum_stacking');
+    }
+
     public function getAreaAttribute()
     {
         return $this->width * $this-> length;
+    }
+
+    public function getStacksAttribute()
+    {
+        return (int)ceil($this->containers->count() / $this->maximum_stack);
     }
 }
