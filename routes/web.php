@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $filename = base_path() . '/README.md';
+    $f = fopen($filename, 'r');
+
+    if ($f) {
+        $contents = fread($f, filesize($filename));
+        fclose($f);
+        $html = Str::markdown($contents);
+        return $html;
+    }
 });

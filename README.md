@@ -1,64 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Api para controle de pátios e containers
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Regras gerais:
 
-## About Laravel
+Essa aplicação deve usar o sistema internacional de unidades. (https://pt.wikipedia.org/wiki/Sistema_Internacional_de_Unidades)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Papéis de usuários
+1.  Gerente de Imóveis
+2.  Gerente de Logística
+3.  Operador de Logística
+      
+## Pátios
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Cada galpão deve possuir os seguintes atributos no banco de dados
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Id    
+-   Localizador (único e formado por 3 letras)
+-   Comprimento (em cm)    
+-   Largura (em cm)
+    
+E os seguintes atributos calculados
 
-## Learning Laravel
+-   Área (m<sup>2</sup>)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Além disso ele deve obedecer os seguintes padrões:
+  
+1.  Possui formato cúbico  
+2.  Apenas usuários com o papel gerente de imóveis podem gerenciar pátios
+3.  Pátios podem ser listados, cadastrados, editados e excluídos
+4.  Apenas pátios vazios podem ser excluídos
+5.  O pátio não pode ter a área diminuída
+6.  A área mínima do pátio é a de um container padrão
+7.  Os pátios podem armazenar contêineres de acordo com a área máxima sem limite de peso total.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Containers
 
-## Laravel Sponsors
+Cada contêiner deve possuir os seguintes atributos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+-   Localizador (Único e formado por uma letra maiúscula e 2 dígitos, exemplo: X34)    
+-   Profundidade (cm)
+-   Comprimento (cm)
+-   Largura (cm)
+-   Peso da Tara (kg)
+-   Peso máximo de armazenamento (kg)
+-   Pátio de armazenamento
 
-### Premium Partners
+E os seguintes atributos calculados
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+-   Volume (m<sup>3</sup>)    
+-   Peso Bruto (Peso da tara + peso dos objetos) (tonelada)
+-   Volume livre (m<sup>3</sup>)
+-   Volume preenchido (m<sup>3</sup>)
 
-## Contributing
+Além disso eles devem obedecer às seguintes normas:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  Todo container nessa aplicação deverá ter as medidas pré-definidas como na imagem abaixo:
 
-## Code of Conduct
+![](https://lh4.googleusercontent.com/ISWW7au9J00pKDRCy0qE0h6nmBRCkUJJd9XFauIyl4nP977RrojNoeSpQ9m317i78m7m6jC_8mDfO69lfZ6N2qoDg-4FUXXo5rvILRpXTyjOY31-eN1yjnyw1N9GwgH1byiJoMI5LeiNwJARKQ)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2.  Apenas usuários com o papel gerente de logística podem gerenciar containers
+3.  Containers podem ser cadastrados, inativados e ativados.
+4.  Apenas containers vazios podem ser inativados
+5.  Os containers podem armazenar objetos de acordo com a área e volume máximos
+6.  Cada container pode armazenar no máximo 18 toneladas (fora as 2.44 toneladas de tara)
+7.  Os containers podem ser empilhados desde que a quantidade empilhada não ultrapasse 9 containers.
 
-## Security Vulnerabilities
+## Objetos
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Os objetos devem possuir os seguintes atributos:
+-   Identificador (GUID)
+-   Profundidade (em cm)
+-   Comprimento (em cm)
+-   Largura (em cm)
+-   Peso (em gramas)
+-   Container de armazenamento
 
-## License
+E os seguintes atributos calculados
+- Volume (m<sup>3</sup>)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Além disso eles devem obedecer às seguintes normas:
+1.  Todo objeto tem formato cúbico
+2.  Qualquer usuário autenticado pode gerenciar objetos
+3.  Objetos podem ser cadastrados e excluídos (soft delete)
+4.  Os objetos podem ser empilhados livremente
