@@ -25,4 +25,15 @@ class ContainerFactory extends Factory
             'tare_weight' => config('constants.container.tare_weight')
         ];
     }
+
+    public function oversized()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'length' => $attributes['length'] + 400,
+                'width' => $attributes['width'] + 510,
+                'height' => $attributes['height'] + 310,
+            ];
+        });
+    }
 }

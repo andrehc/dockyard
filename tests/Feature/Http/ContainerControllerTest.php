@@ -58,6 +58,13 @@ class ContainerControllerTest extends TestCase
             ->assertJsonFragment(['locator' => $container->locator]);
     }
 
+    public function test_oversized_container_cannot_be_created()
+    {
+        $container = Container::factory()->oversized()->for(Yard::factory()->create())->make();        
+        $response = $this->postJson("api/containers", $container->toArray());
+        $response->assertStatus(422);
+    }
+
 
     public function test_container_can_not_be_updated()
     {
