@@ -17,7 +17,7 @@ class ContainerFactory extends Factory
     public function definition()
     {
         return [
-            'locator' => strtoupper($this->faker->bothify('?##')),
+            'locator' => strtoupper($this->faker->unique()->bothify('?##')),
             'length' => config('constants.container.length'),
             'width' => config('constants.container.width'),
             'height' => config('constants.container.height'),

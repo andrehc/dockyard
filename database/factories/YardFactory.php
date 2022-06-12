@@ -17,7 +17,7 @@ class YardFactory extends Factory
     public function definition()
     {
         return [
-            'locator' => strtoupper($this->faker->lexify('???')),
+            'locator' => strtoupper($this->faker->unique()->lexify('???')),
             'length' => 606*$this->faker->randomDigitNotNull(),
             'width' => 244*$this->faker->randomDigitNotNull(),
         ];
