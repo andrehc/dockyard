@@ -6,6 +6,7 @@ use App\Models\Container;
 use App\Models\Yard;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class ContainerControllerTest extends TestCase
@@ -81,18 +82,7 @@ class ContainerControllerTest extends TestCase
 
     public function test_container_can_not_be_updated()
     {
-        $yard = Yard::factory()->create();
-        $container = Container::factory()->for($yard)->create();
-        $new_attributes = [
-            'locator' => $container->locator,
-            'width' => $container->width / 2,
-            'length' => $container->length / 2,
-            'yard_id' => $yard->id
-        ];
-        $response = $this->putJson("api/containers/{$container->id}", $new_attributes);
-
-        $response
-            ->assertStatus(405);
+        $this->assertFalse(Route::has('containers.update'));
     }
 
 

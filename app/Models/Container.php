@@ -23,6 +23,11 @@ class Container extends Model
         return $this->belongsTo(Yard::class);
     }
 
+    public function boxes()
+    {
+        return $this->hasMany(Box::class);
+    }
+
     public function getVolumeAttribute()
     {
         return ($this->width * $this->length * $this->height) / 1000000;

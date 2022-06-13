@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoxController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\PatioController;
 use App\Http\Controllers\YardController;
@@ -29,6 +30,7 @@ Route::get('yards/view/{id}', function($id){
 });
 Route::apiResource('yards', YardController::class);
 Route::apiResource('containers', ContainerController::class)->except(['update']);
+Route::apiResource('boxes', BoxController::class)->except(['update']);
 
 
 

@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 class Box extends Model
 {
-    use HasFactory;
-    protected $keyType = 'string';
+    use HasFactory, Uuid;
+    
+    public $keyType = 'string';
+    public $incrementing = false;
+    public $fillable = [
+        'height',
+        'width',
+        'length',
+        'container_id',
+        'weight'
+    ];
 
     public function container()
     {
@@ -19,10 +28,5 @@ class Box extends Model
     public function getVolumeAttribute()
     {
         return ($this->width * $this->length * $this->height) / 1000000;
-    }
-
-    protected static function booted()
-    {
-        static::creating(fn (Box $box) => $box->id = (string) Uuid::uuid4());
-    }
+    }    
 }

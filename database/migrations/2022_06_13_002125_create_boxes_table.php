@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->uuid('id');
+            $table->primary('id');
             $table->integer('height');
             $table->integer('length');
             $table->integer('width');
