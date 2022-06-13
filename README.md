@@ -47,7 +47,7 @@ Cada contêiner deve possuir os seguintes atributos
 E os seguintes atributos calculados
 
 -   Volume (m<sup>3</sup>)    
--   Peso Bruto (Peso da tara + peso dos objetos) (tonelada)
+-   Peso Bruto (Peso da tara + peso das caixas) (tonelada)
 -   Volume livre (m<sup>3</sup>)
 -   Volume preenchido (m<sup>3</sup>)
 
@@ -58,17 +58,17 @@ Além disso eles devem obedecer às seguintes normas:
 ![](https://lh4.googleusercontent.com/ISWW7au9J00pKDRCy0qE0h6nmBRCkUJJd9XFauIyl4nP977RrojNoeSpQ9m317i78m7m6jC_8mDfO69lfZ6N2qoDg-4FUXXo5rvILRpXTyjOY31-eN1yjnyw1N9GwgH1byiJoMI5LeiNwJARKQ)
 
 2.  Apenas usuários com o papel gerente de logística podem gerenciar containers
-3.  Containers podem ser cadastrados, inativados e ativados.
+3.  Containers podem ser cadastrados, excluídas e restauradas (soft delete)
 4.  Apenas containers vazios podem ser inativados
-5.  Os containers podem armazenar objetos de acordo com a área e volume máximos
+5.  Os containers podem armazenar caixas de acordo com a área e volume máximos
 6.  Cada container pode armazenar no máximo 18 toneladas (fora as 2.44 toneladas de tara)
 7.  Os containers podem ser empilhados desde que a quantidade empilhada não ultrapasse 9 containers.
 
-## Objetos
+## Caixas
 
-Os objetos devem possuir os seguintes atributos:
+As caixas devem possuir os seguintes atributos:
 -   Identificador (GUID)
--   Profundidade (em cm)
+-   Altura (em cm)
 -   Comprimento (em cm)
 -   Largura (em cm)
 -   Peso (em gramas)
@@ -78,7 +78,7 @@ E os seguintes atributos calculados
 - Volume (m<sup>3</sup>)
 
 Além disso eles devem obedecer às seguintes normas:
-1.  Todo objeto tem formato cúbico
-2.  Qualquer usuário autenticado pode gerenciar objetos
-3.  Objetos podem ser cadastrados e excluídos (soft delete)
-4.  Os objetos podem ser empilhados livremente
+1.  Toda caixa tem formato cúbico
+2.  Qualquer usuário autenticado pode gerenciar caixas
+3.  Caixas podem ser cadastradas e excluídas
+4.  As caixas podem ser empilhados livremente desde que haja espaço vertical

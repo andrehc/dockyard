@@ -12,7 +12,7 @@ class ContainerTest extends TestCase
 {
     use RefreshDatabase;
     
-    public function test_volume_is_calculated()
+    public function test_container_volume_is_calculated()
     {
         $container = Container::factory()->for(Yard::factory()->create())->create();
 
