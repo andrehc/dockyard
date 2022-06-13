@@ -55,6 +55,19 @@ class YardControllerTest extends TestCase
             ->assertJsonFragment(['locator' => $yard->locator]);
     }
 
+    public function test_yard_locator_must_contain_only_letters()
+    {
+        $locators = ['A2C', '123', 'AB%'];
+
+        foreach ($locators as $locator) {
+
+        $yard = Yard::factory()->make(['locator'=>$locator]);
+        $response = $this->postJson("api/yards", $yard->toArray());
+        $response
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors'=>['locator']]);
+        }
+    }
 
     public function test_yard_can_be_updated()
     {        
@@ -68,6 +81,20 @@ class YardControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonFragment(['width'=>$new_attributes['width']]);
+    }
+
+    public function test_yard_can_not_be_updated_with_invalid_locator()
+    {        
+        $yard = Yard::factory()->create();
+        $new_attributes = [
+            'locator' => 'A1A',
+            'width' => $yard->width+100,
+            'length' => $yard->length+100
+        ];
+        $response = $this->putJson("api/yards/{$yard->id}", $new_attributes);
+        $response
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors'=>['locator']]);
     }
 
     public function test_yard_cant_have_area_decreased()

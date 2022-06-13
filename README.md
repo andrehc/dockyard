@@ -24,7 +24,7 @@ E os seguintes atributos calculados
 
 Além disso ele deve obedecer os seguintes padrões:
   
-1.  Possui formato cúbico  
+1.  Possui formato retangular  
 2.  Apenas usuários com o papel gerente de imóveis podem gerenciar pátios
 3.  Pátios podem ser listados, cadastrados, editados e excluídos
 4.  Apenas pátios vazios podem ser excluídos

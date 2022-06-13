@@ -23,9 +23,9 @@ class ContainerCreateRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {    
+    {
         return [
-            'locator' => 'required|unique:App\Models\Container,locator|size:3',
+            'locator' => ['required', 'size:3', 'regex:/[A-Z]{1}[0-9]{2}/', 'unique:App\Models\Container,locator'],
             'length' => ['required', 'integer', new MatchValue(config('constants.container.length'))],
             'width' => ['required', 'integer', new MatchValue(config('constants.container.width'))],
             'height' => ['required', 'integer', new MatchValue(config('constants.container.height'))],

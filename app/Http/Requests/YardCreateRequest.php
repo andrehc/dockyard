@@ -29,7 +29,7 @@ class YardCreateRequest extends FormRequest
         $min_length = config('constants.container.length');
         
         return [
-            'locator' => 'required|unique:App\Models\Yard,locator|size:3',
+            'locator' => ['required', 'size:3', 'regex:/[A-Z]{3}/', 'unique:App\Models\Yard,locator'],
             'width' => ['integer','required', "min:$min_width"],
             'length' => ['integer', 'required', "min:$min_length"]
         ];

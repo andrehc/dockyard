@@ -27,17 +27,17 @@ class YardUpdateRequest extends FormRequest
         $min_length = config('constants.container.length');
 
         return [
-            'locator' => ['required', 'unique:App\Models\Yard,locator,' . $this->yard->id, 'size:3'],
-            'width' => ['integer','required', "min:$min_width"],
+            'locator' => ['required', 'size:3', 'regex:/[A-Z]{3}/', 'unique:App\Models\Yard,locator,' . $this->yard->id],
+            'width' => ['integer', 'required', "min:$min_width"],
             'length' => ['integer', 'required', "min:$min_length"]
         ];
     }
 
     public function withValidator($validator)
-    {        
+    {
         $validator->after(function ($validator) {
             $newArea = ($this->width * $this->length) / 10000;
-            
+
             if ($this->yard->area > $newArea) {
                 $validator->errors()->add('area', 'You can not decrease the yard area');
             }

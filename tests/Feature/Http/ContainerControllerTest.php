@@ -19,12 +19,12 @@ class ContainerControllerTest extends TestCase
     public function test_containers_are_listed()
     {
         $items = rand(1, 15);
-        
+
         Container::factory()
             ->count($items)
             ->for(Yard::factory()->create())
             ->create();
-        
+
         $response = $this->getJson('api/containers');
         $response
             ->assertStatus(200)
@@ -51,16 +51,29 @@ class ContainerControllerTest extends TestCase
 
     public function test_container_can_be_created()
     {
-        $container = Container::factory()->for(Yard::factory()->create())->make();        
+        $container = Container::factory()->for(Yard::factory()->create())->make();
         $response = $this->postJson("api/containers", $container->toArray());
         $response
             ->assertStatus(201)
             ->assertJsonFragment(['locator' => $container->locator]);
     }
 
+    public function test_container_locator_must_have_one_letter_and_two_digits()
+    {
+        $locators = ['ABC', '123', 'A2B'];
+
+        foreach ($locators as $locator) {
+            $container = Container::factory()->for(Yard::factory()->create())->make(['locator' => $locator]);
+            $response = $this->postJson("api/containers", $container->toArray());
+            $response
+                ->assertStatus(422)
+                ->assertJsonStructure(['message', 'errors'=>['locator']]);
+        }
+    }
+
     public function test_oversized_container_cannot_be_created()
     {
-        $container = Container::factory()->oversized()->for(Yard::factory()->create())->make();        
+        $container = Container::factory()->oversized()->for(Yard::factory()->create())->make();
         $response = $this->postJson("api/containers", $container->toArray());
         $response->assertStatus(422);
     }
@@ -72,12 +85,12 @@ class ContainerControllerTest extends TestCase
         $container = Container::factory()->for($yard)->create();
         $new_attributes = [
             'locator' => $container->locator,
-            'width' => $container->width/2,
-            'length' => $container->length/2,
+            'width' => $container->width / 2,
+            'length' => $container->length / 2,
             'yard_id' => $yard->id
         ];
         $response = $this->putJson("api/containers/{$container->id}", $new_attributes);
-        
+
         $response
             ->assertStatus(405);
     }

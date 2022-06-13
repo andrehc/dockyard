@@ -22,4 +22,6 @@ class YardFactory extends Factory
             'width' => 244*$this->faker->randomDigitNotNull(),
         ];
     }
+
+    
 }
