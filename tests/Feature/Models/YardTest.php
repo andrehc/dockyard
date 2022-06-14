@@ -16,7 +16,7 @@ class YardTest extends TestCase
     {
         $yard = Yard::factory()->create();
 
-        $areaExpected = ($yard->width * $yard->length) / 10000;
+        $areaExpected = round(($yard->width * $yard->length) / 10000, 2);
 
         $this->assertSame($areaExpected, $yard->area);
     }
@@ -52,5 +52,26 @@ class YardTest extends TestCase
         $container_capacity_expected = $y_containers * $x_containers * $maximum_stacking;
 
         $this->assertSame($container_capacity_expected, $yard->container_capacity);
+    }
+
+    public function test_container_free_capacity()
+    {
+
+        $yard = Yard::factory()->create([
+            'width' => 500,
+            'length' => 1500
+        ]);
+        $maximum_stacking = 9;
+        $y_containers = 2;
+        $x_containers = 2;
+        
+        $container_capacity_expected = $y_containers * $x_containers * $maximum_stacking;
+
+        Container::factory()
+            ->count($container_capacity_expected - 5)
+            ->for($yard)
+            ->create();
+
+        $this->assertSame(5, $yard->container_free_capacity);
     }
 }

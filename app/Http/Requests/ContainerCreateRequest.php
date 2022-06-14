@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Yard;
 use App\Rules\MatchValue;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,5 +33,16 @@ class ContainerCreateRequest extends FormRequest
             'max_load_weight' => ['required', 'integer', new MatchValue(config('constants.container.max_load_weight'))],
             'tare_weight' => ['required', 'integer', new MatchValue(config('constants.container.tare_weight'))],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $yard = Yard::find($this->yard_id);
+            if($yard->container_free_capacity <= 0)
+            {
+                $validator->errors()->add('no_free_area', 'There are no free area to store containers in this Yard');
+            }
+        });
     }
 }

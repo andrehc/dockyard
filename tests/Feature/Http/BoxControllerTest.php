@@ -24,12 +24,13 @@ class BoxControllerTest extends TestCase
         $items = rand(1, 15);
 
         $box = Box::factory()
-        ->count($items)
-        ->for(
-            Container::factory()
-                ->for(Yard::factory()->create())
-                ->create())
-        ->create();        
+            ->count($items)
+            ->for(
+                Container::factory()
+                    ->for(Yard::factory()->create())
+                    ->create()
+            )
+            ->create();
 
         $response = $this->getJson('api/boxes');
         $response
@@ -46,16 +47,47 @@ class BoxControllerTest extends TestCase
             ->assertJsonCount(0, 'data');
     }
 
+    public function test_boxes_can_not_be_stored_in_full_containers()
+    {
+        $container = Container::factory()->for(Yard::factory()->create())->create();
+
+        $items = 38;
+
+        Box::factory()->count($items)->for($container)->create([
+            'width' => 100,
+            'length' => 100,
+            'height' => 100
+        ]);
+
+        $box = Box::factory()
+            ->for($container)
+            ->make([
+                'width' => 100,
+                'length' => 100,
+                'height' => 100
+            ]);
+        $response = $this->postJson("api/boxes", $box->toArray());
+        $response
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors' => ['no_free_volume']]);
+    }
+
+    public function test_boxes_in_a_container_can_not_weight_more_than_18_tons()
+    {
+        $this->assertTrue(false);
+    }
+
     public function test_specific_box_is_displayed()
     {
         $box = Box::factory()
             ->for(
                 Container::factory()
                     ->for(Yard::factory()->create())
-                    ->create())
-            ->create();                       
-        
-            $response = $this->getJson("api/boxes/{$box->id}");
+                    ->create()
+            )
+            ->create();
+
+        $response = $this->getJson("api/boxes/{$box->id}");
         $response
             ->assertStatus(200)
             ->assertJsonFragment(['id' => $box->id]);
@@ -67,7 +99,8 @@ class BoxControllerTest extends TestCase
             ->for(
                 Container::factory()
                     ->for(Yard::factory()->create())
-                    ->create())
+                    ->create()
+            )
             ->make();
         $response = $this->postJson("api/boxes", $box->toArray());
         $response
@@ -76,7 +109,7 @@ class BoxControllerTest extends TestCase
 
     public function test_box_can_not_be_updated()
     {
-       $this->assertFalse(Route::has('boxes.update'));
+        $this->assertFalse(Route::has('boxes.update'));
     }
 
 
@@ -86,7 +119,8 @@ class BoxControllerTest extends TestCase
             ->for(
                 Container::factory()
                     ->for(Yard::factory()->create())
-                    ->create())
+                    ->create()
+            )
             ->create();
 
         $response = $this->deleteJson("api/boxes/{$box->id}");

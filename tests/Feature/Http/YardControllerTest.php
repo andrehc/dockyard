@@ -110,7 +110,7 @@ class YardControllerTest extends TestCase
         $response = $this->putJson("api/yards/{$yard->id}", $new_attributes);
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(['message'=>'You can not decrease the yard area']);
+            ->assertJsonStructure(['message', 'errors'=>['area']]);
     }
 
     public function test_yard_can_be_deleted()

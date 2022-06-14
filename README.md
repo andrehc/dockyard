@@ -15,12 +15,12 @@ Cada galpão deve possuir os seguintes atributos no banco de dados
 
 -   Id    
 -   Localizador (único e formado por 3 letras)
--   Comprimento (em cm)    
--   Largura (em cm)
+-   Comprimento (em cm) - inteiro
+-   Largura (em cm) - inteiro
     
 E os seguintes atributos calculados
 
--   Área (m<sup>2</sup>)
+-   Área (m<sup>2</sup>) - duas casas decimais
 
 Além disso ele deve obedecer os seguintes padrões:
   
@@ -31,25 +31,28 @@ Além disso ele deve obedecer os seguintes padrões:
 5.  O pátio não pode ter a área diminuída
 6.  A área mínima do pátio é a de um container padrão
 7.  Os pátios podem armazenar contêineres de acordo com a área máxima sem limite de peso total.
+8.  O armazenamento de containers sempre será feito mantendo a direção dos mesmos conforme imagem abaixo:
+
+![](https://lh6.googleusercontent.com/lFYb-RGQ7bEqWwDFKfwUQrqRlfVma4WmDbGN7BhjVd-wrnmKk0lA2uB6Qs342QgbM-U_N__WxybSJjxpqd99CEvzMLfsRN1BrSbrhMXttMs50ekY0Ck5tBrLFwkcr5ojXxxxeycTvcKn2tsIrA)
 
 ## Containers
 
 Cada contêiner deve possuir os seguintes atributos
 
 -   Localizador (Único e formado por uma letra maiúscula e 2 dígitos, exemplo: X34)    
--   Profundidade (cm)
--   Comprimento (cm)
--   Largura (cm)
--   Peso da Tara (kg)
--   Peso máximo de armazenamento (kg)
+-   Altura (cm) - inteiro
+-   Comprimento (cm) - inteiro
+-   Largura (cm) - inteiro
+-   Peso da Tara (kg) - inteiro
+-   Peso máximo de armazenamento (kg) - inteiro
 -   Pátio de armazenamento
 
 E os seguintes atributos calculados
 
--   Volume (m<sup>3</sup>)    
+-   Volume (m<sup>3</sup>) - duas casas decimais
 -   Peso Bruto (Peso da tara + peso das caixas) (tonelada)
--   Volume livre (m<sup>3</sup>)
--   Volume preenchido (m<sup>3</sup>)
+-   Volume livre (m<sup>3</sup>) - duas casas decimais
+-   Volume preenchido (m<sup>3</sup>) - duas casas decimais
 
 Além disso eles devem obedecer às seguintes normas:
 
@@ -68,14 +71,14 @@ Além disso eles devem obedecer às seguintes normas:
 
 As caixas devem possuir os seguintes atributos:
 -   Identificador (GUID)
--   Altura (em cm)
--   Comprimento (em cm)
--   Largura (em cm)
--   Peso (em gramas)
+-   Altura (em cm) - inteiro
+-   Comprimento (em cm) - inteiro
+-   Largura (em cm) - inteiro
+-   Peso (em gramas) - inteiro
 -   Container de armazenamento
 
 E os seguintes atributos calculados
-- Volume (m<sup>3</sup>)
+- Volume (m<sup>3</sup>) - duas casas decimais
 
 Além disso eles devem obedecer às seguintes normas:
 1.  Toda caixa tem formato cúbico

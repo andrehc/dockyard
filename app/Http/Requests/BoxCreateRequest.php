@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Container;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BoxCreateRequest extends FormRequest
@@ -29,5 +30,17 @@ class BoxCreateRequest extends FormRequest
             'height' => ['required', 'integer', 'min:0'],
             'weight' => ['required', 'integer', 'min:0']
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $box_volume = round(($this->length * $this->width * $this->height) / 1000000, 2);
+            $container = Container::find($this->container_id);
+            if($container->free_volume < $box_volume)
+            {
+                $validator->errors()->add('no_free_volume', 'There are no free volue to store boxes in this Container');
+            }
+        });
     }
 }

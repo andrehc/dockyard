@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContainerCreateRequest;
 use App\Models\Container;
+use DomainException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Matcher\Contains;
@@ -39,10 +40,10 @@ class ContainerController extends Controller
      */
     public function show(Container $container)
     {
-       return $container;
+        return $container;
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -50,7 +51,14 @@ class ContainerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Container $container)
-    {
-       $container->delete();
+    {            
+        try{
+            $container->delete();
+        }
+        catch(DomainException $exception)
+        {
+            abort(422, $exception->getMessage());
+        }
+        
     }
 }

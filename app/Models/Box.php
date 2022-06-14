@@ -27,6 +27,6 @@ class Box extends Model
 
     public function getVolumeAttribute()
     {
-        return ($this->width * $this->length * $this->height) / 1000000;
+        return round(($this->width * $this->length * $this->height) / 1000000, 2);
     }    
 }

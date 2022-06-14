@@ -27,7 +27,7 @@ class Yard extends Model
 
     public function getAreaAttribute()
     {
-        return ($this->width * $this-> length) / 10000;
+        return round(($this->width * $this-> length) / 10000, 2);
     }
 
     public function getStacksAttribute()
@@ -39,6 +39,11 @@ class Yard extends Model
     {
         $horizontal_container_capacity = (int) floor($this->width / config('constants.container.width'));
         $vertical_container_capacity = (int) floor($this->length / config('constants.container.length'));
-        return $horizontal_container_capacity * $vertical_container_capacity * $this->maximum_stack ;
+        return (int)floor($horizontal_container_capacity * $vertical_container_capacity * $this->maximum_stack);
+    }
+
+    public function getContainerFreeCapacityAttribute()
+    {
+        return $this->container_capacity - $this->containers->count();
     }
 }

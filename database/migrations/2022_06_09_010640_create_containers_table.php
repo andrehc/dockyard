@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('tare_weight');
             $table->integer('max_load_weight');
             $table->foreignId('yard_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

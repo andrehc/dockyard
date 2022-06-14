@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class BoxTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
     
     public function test_box_volume_is_calculated()
     {
@@ -23,7 +23,7 @@ class BoxTest extends TestCase
                     ->create())
             ->create();
 
-        $volumeExpected = ($box->width * $box->length * $box->height) / 1000000;
+        $volumeExpected = round(($box->width * $box->length * $box->height) / 1000000, 2);
 
         $this->assertSame($volumeExpected, $box->volume);
     }

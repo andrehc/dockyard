@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http;
 
+use App\Models\Box;
 use App\Models\Container;
 use App\Models\Yard;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -68,7 +69,7 @@ class ContainerControllerTest extends TestCase
             $response = $this->postJson("api/containers", $container->toArray());
             $response
                 ->assertStatus(422)
-                ->assertJsonStructure(['message', 'errors'=>['locator']]);
+                ->assertJsonStructure(['message', 'errors' => ['locator']]);
         }
     }
 
@@ -79,6 +80,30 @@ class ContainerControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_container_can_not_be_created_without_free_area_in_yard()
+    {
+        $yard = Yard::factory()->create([
+            'width' => 500,
+            'length' => 1500
+        ]);
+        $maximum_stacking = 9;
+        $y_containers = 2;
+        $x_containers = 2;
+
+        $container_capacity_expected = $y_containers * $x_containers * $maximum_stacking;
+
+        Container::factory()
+            ->count($container_capacity_expected)
+            ->for($yard)
+            ->create();
+
+        $container = Container::factory()->for($yard)->make();
+        $response = $this->postJson("api/containers", $container->toArray());
+        $response
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors'=>['no_free_area']]);
+    }
+
 
     public function test_container_can_not_be_updated()
     {
@@ -86,13 +111,21 @@ class ContainerControllerTest extends TestCase
     }
 
 
-    public function test_container_can_be_deleted()
+    public function test_container_can_be_soft_deleted()
     {
         $container = Container::factory()->for(Yard::factory()->create())->create();
         $response = $this->deleteJson("api/containers/{$container->id}");
-        $response->assertStatus(200);
-        $this->assertDatabaseMissing('containers', [
-            'locator' => $container->locator
-        ]);
+        $response->assertStatus(200);        
+    }
+
+    public function test_container_with_boxes_cant_be_deleted()
+    {
+        $container = Container::factory()->for(Yard::factory()->create())->create();
+        Box::factory()->count(3)->for($container)->create();
+        $response = $this->deleteJson("api/containers/{$container->id}");
+        $response
+            ->assertStatus(422)
+            ->assertJsonStructure(['message']);
+       
     }
 }
