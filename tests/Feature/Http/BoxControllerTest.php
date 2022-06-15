@@ -69,12 +69,36 @@ class BoxControllerTest extends TestCase
         $response = $this->postJson("api/boxes", $box->toArray());
         $response
             ->assertStatus(422)
-            ->assertJsonStructure(['message', 'errors' => ['no_free_volume']]);
+            ->assertJsonStructure(['message', 'errors' => ['free_volume']]);
     }
 
     public function test_boxes_in_a_container_can_not_weight_more_than_18_tons()
     {
-        $this->assertTrue(false);
+        $container = Container::factory()->for(Yard::factory()->create())->create();
+
+        $items = 36;
+
+        Box::factory()->count($items)->for($container)->create([
+            'width' => 100,
+            'length' => 100,
+            'height' => 100,
+            'weight' => 490000
+        ]);
+
+        $box = Box::factory()
+            ->for($container)
+            ->make([
+                'width' => 100,
+                'length' => 100,
+                'height' => 100,
+                'weight' => 360001
+            ]);
+
+        
+            $response = $this->postJson("api/boxes", $box->toArray());
+            $response
+                ->assertStatus(422)
+                ->assertJsonStructure(['message', 'errors' => ['net_weight']]);
     }
 
     public function test_specific_box_is_displayed()
